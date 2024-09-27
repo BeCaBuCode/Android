@@ -30,6 +30,7 @@ public class Activity2 extends AppCompatActivity {
     ArrayList<Student> myList;
     MyStudentAdapter myStudentAdapter;
     Button b;
+    Intent r;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class Activity2 extends AppCompatActivity {
         getSupportActionBar().setTitle("Danh Sach Sinh Vien");
         lv=findViewById(R.id.lv2);
         b=findViewById(R.id.button2);
-        Intent r=getIntent();
+        r=getIntent();
         int numlist=r.getIntExtra("NumList",3);
 
         /*SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("DATA",MODE_PRIVATE);
@@ -67,14 +68,22 @@ public class Activity2 extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i=0;i<myList.size();i++){
-                    r.putExtra("model"+i,myList.get(i));
-                }
-                r.putExtra("size",myList.size());
-                setResult(11,r);
+                passing();
                 finish();
             }
         });
+    }
+    private void passing(){
+        for (int i=0;i<myList.size();i++){
+            r.putExtra("model"+i,myList.get(i));
+        }
+        r.putExtra("size",myList.size());
+        setResult(11,r);
+    }
+    @Override
+    public void onBackPressed() {
+        passing();
+        super.onBackPressed();
     }
 
     @Override
