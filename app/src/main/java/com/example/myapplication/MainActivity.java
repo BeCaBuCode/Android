@@ -45,23 +45,23 @@ public class MainActivity extends AppCompatActivity {
         s1=new ArrayList<>();
         s2=new ArrayList<>();
         s3=new ArrayList<>();
-        s1.add(new Student("Lil Billy","23520950","26/26/1205"));
-        s1.add(new Student("Hua Van Ly","23520906","18/08/2005"));
-        s1.add(new Student("Lil Johnny","23520911","26/26/2105"));
+        s1.add(new Student("Student 1","23520950","26/26/1205"));
+        s1.add(new Student("Student 2","23520906","18/08/2005"));
+        s1.add(new Student("Student 3","23520911","26/26/2105"));
 
-        s2.add(new Student("Little Billy","23520950","26/26/1205"));
-        s2.add(new Student("Ho Nguyen Minh","23520906","18/08/2005"));
-        s2.add(new Student("Lil Billy","23520911","26/26/2105"));
+        s2.add(new Student("Student 4","23520950","26/26/1205"));
+        s2.add(new Student("Student 5","23520912","18/08/2005"));
+        s2.add(new Student("Student 6","23520977","26/26/2105"));
 
-        s3.add(new Student("Lil Ill","23520950","26/26/1205"));
-        s3.add(new Student("Ly Hua","23520906","18/08/2005"));
-        s3.add(new Student("Lil Johnny","23520911","26/26/2105"));
+        s3.add(new Student("Student 7","23520950","26/26/1205"));
+        s3.add(new Student("Student 8","23520906","18/08/2005"));
+        s3.add(new Student("Student 9","23520911","26/26/2105"));
 
         lv=findViewById(R.id.lv1);
         myList=new ArrayList<>();
-        myList.add(new SClass("1","KTPM",s1));
-        myList.add(new SClass("2","KHMT",s2));
-        myList.add(new SClass("3","MMT",s3));
+        myList.add(new SClass("1","Ky thuat phan mem",s1));
+        myList.add(new SClass("2","Khoa hoc may tinh",s2));
+        myList.add(new SClass("3","Mang may tinh",s3));
 
         myClassAdapter=new MyClassAdapter(MainActivity.this,R.layout.layout_class,myList);
         lv.setAdapter(myClassAdapter);
