@@ -16,10 +16,10 @@
             android:name=".Add_Class"
             android:exported="false" />
         <activity
-            android:name=".StudentInfo"
+            android:name=".Add_Student"
             android:exported="false" />
         <activity
-            android:name=".Activity2"
+            android:name=".Student_List_Activity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

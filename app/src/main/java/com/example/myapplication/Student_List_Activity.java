@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +18,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class Activity2 extends AppCompatActivity {
+public class Student_List_Activity extends AppCompatActivity {
     ListView lv;
     ArrayList<Student> myList;
     MyStudentAdapter myStudentAdapter;
@@ -35,7 +30,7 @@ public class Activity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_2);
+        setContentView(R.layout.student_list_activity);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -63,7 +58,7 @@ public class Activity2 extends AppCompatActivity {
                 myList.add((Student) r.getSerializableExtra("model" + i));
             }
 
-        myStudentAdapter=new MyStudentAdapter(Activity2.this,R.layout.layout_student,myList);
+        myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
         lv.setAdapter(myStudentAdapter);
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +94,7 @@ public class Activity2 extends AppCompatActivity {
     {
         if (item.getItemId()==R.id.item1)
         {
-            Intent r= new Intent(Activity2.this, StudentInfo.class);
+            Intent r= new Intent(Student_List_Activity.this, Add_Student.class);
             startActivityForResult(r,99);
         }
         else{
@@ -125,7 +120,7 @@ public class Activity2 extends AppCompatActivity {
                     sizeOri--;
                 }
             }
-            myStudentAdapter=new MyStudentAdapter(Activity2.this,R.layout.layout_student,myList);
+            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
             lv.setAdapter(myStudentAdapter);
         }
         return super.onOptionsItemSelected(item);
@@ -141,7 +136,7 @@ public class Activity2 extends AppCompatActivity {
             String name=data.getStringExtra("Name");
             String birth=data.getStringExtra("Birth");
             myList.add(new Student(name,MSSV,birth));
-            myStudentAdapter=new MyStudentAdapter(Activity2.this,R.layout.layout_student,myList);
+            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
             lv.setAdapter(myStudentAdapter);
         }
     }

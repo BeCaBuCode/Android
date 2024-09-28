@@ -1,9 +1,6 @@
 package com.example.myapplication;
 
-import static java.lang.System.in;
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,14 +12,11 @@ import android.widget.ListView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -69,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedindex=position;
-                Intent r=new Intent(MainActivity.this,Activity2.class);
+                Intent r=new Intent(MainActivity.this, Student_List_Activity.class);
                 for (int i=0;i<myList.get(position).getMyList().size();i++){
                     r.putExtra("model"+i,myList.get(position).getMyList().get(i));
                 }
