@@ -1,6 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.Adapter;
+
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,37 +12,36 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.google.gson.Gson;
+import com.example.myapplication.R;
+import com.example.myapplication.Class.SClass;
 
 import java.util.ArrayList;
 
-public class MyStudentAdapter extends ArrayAdapter<Student> {
-    Activity context;
+public class MyClassAdapter extends ArrayAdapter<SClass> {
+    Activity content;
     int idLayout;
-    ArrayList<Student> myList;
+    ArrayList<SClass> myList;
 
-    public MyStudentAdapter(Activity context1, int idLayout, ArrayList<Student> myList) {
-        super(context1, idLayout,myList);
-        this.context = context1;
+    public MyClassAdapter(Activity content, int idLayout, ArrayList<SClass> myList) {
+        super(content, idLayout,myList);
+        this.content = content;
         this.idLayout = idLayout;
-        this.myList=new ArrayList<>();
+        this.myList = new ArrayList<>();
         this.myList.addAll(myList);
     }
-
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater myFlater=context.getLayoutInflater();
+        LayoutInflater myFlater=content.getLayoutInflater();
         convertView=myFlater.inflate(idLayout,null);
-        Student s=myList.get(position);
-        TextView t1=convertView.findViewById(R.id.textView2);
-        t1.setText(s.getMSSV());
-        TextView t2=convertView.findViewById(R.id.textView);
-        t2.setText(s.getName());
-        TextView t3=convertView.findViewById(R.id.textView3);
-        t3.setText(s.getBirthday());
-        CheckBox b=convertView.findViewById(R.id.checkBox);
-        b.setChecked(s.IsSelected());
+        SClass myClass=myList.get(position);
+        TextView t1=convertView.findViewById(R.id.textView4);
+        t1.setText(myClass.getId()+"");
+        TextView t2=convertView.findViewById(R.id.textView5);
+        t2.setText(myClass.getClassName());
+        CheckBox b=convertView.findViewById(R.id.checkBox2);
+        b.setChecked(myClass.IsSelected());
+        b.setText("");
         b.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -50,7 +49,6 @@ public class MyStudentAdapter extends ArrayAdapter<Student> {
                 notifyDataSetChanged();
             }
         });
-        b.setText("");
         return convertView;
     }
 }

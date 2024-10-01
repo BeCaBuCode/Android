@@ -1,16 +1,19 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.myapplication.R;
 
 public class Add_Class extends AppCompatActivity {
     EditText t1,t2;
@@ -34,6 +37,10 @@ public class Add_Class extends AppCompatActivity {
             public void onClick(View v) {
                 String id=t1.getText().toString();
                 String name=t2.getText().toString();
+                if (id.isEmpty() || name.isEmpty()){
+                    Toast.makeText(Add_Class.this, "Invalid Information", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 r.putExtra("ID",id);
                 r.putExtra("Name",name);
                 setResult(RESULT_OK,r);

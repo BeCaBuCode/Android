@@ -1,8 +1,9 @@
-package com.example.myapplication;
+package com.example.myapplication.Class;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SClass {
+public class SClass implements Serializable {
     private String  id;
     private String className;
     private ArrayList<Student> myList;

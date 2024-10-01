@@ -1,16 +1,19 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.myapplication.R;
 
 public class Add_Student extends AppCompatActivity {
     EditText t1,t2,t3;
@@ -37,6 +40,10 @@ public class Add_Student extends AppCompatActivity {
                 String MSSV=t1.getText().toString();
                 String Name=t2.getText().toString();
                 String Birth=t3.getText().toString();
+                if (MSSV.isEmpty() || Name.isEmpty() || Birth.isEmpty()){
+                    Toast.makeText(Add_Student.this,"Invalid Information",Toast.LENGTH_SHORT);
+                    return;
+                }
                 r.putExtra("MSSV",MSSV);
                 r.putExtra("Name",Name);
                 r.putExtra("Birth",Birth);

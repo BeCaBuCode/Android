@@ -1,12 +1,9 @@
-package com.example.myapplication;
-
+package com.example.myapplication.Adapter;
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -14,34 +11,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.R;
+import com.example.myapplication.Class.Student;
+
 import java.util.ArrayList;
 
-public class MyClassAdapter extends ArrayAdapter<SClass> {
-    Activity content;
+public class MyStudentAdapter extends ArrayAdapter<Student> {
+    Activity context;
     int idLayout;
-    ArrayList<SClass> myList;
+    ArrayList<Student> myList;
 
-    public MyClassAdapter(Activity content, int idLayout, ArrayList<SClass> myList) {
-        super(content, idLayout,myList);
-        this.content = content;
+    public MyStudentAdapter(Activity context1, int idLayout, ArrayList<Student> myList) {
+        super(context1, idLayout,myList);
+        this.context = context1;
         this.idLayout = idLayout;
-        this.myList = new ArrayList<>();
+        this.myList=new ArrayList<>();
         this.myList.addAll(myList);
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        LayoutInflater myFlater=content.getLayoutInflater();
+        LayoutInflater myFlater=context.getLayoutInflater();
         convertView=myFlater.inflate(idLayout,null);
-        SClass myClass=myList.get(position);
-        TextView t1=convertView.findViewById(R.id.textView4);
-        t1.setText(myClass.getId()+"");
-        TextView t2=convertView.findViewById(R.id.textView5);
-        t2.setText(myClass.getClassName());
-        CheckBox b=convertView.findViewById(R.id.checkBox2);
-        b.setChecked(myClass.IsSelected());
-        b.setText("");
+        Student s=myList.get(position);
+        TextView t1=convertView.findViewById(R.id.textView2);
+        t1.setText(s.getMSSV());
+        TextView t2=convertView.findViewById(R.id.textView);
+        t2.setText(s.getName());
+        TextView t3=convertView.findViewById(R.id.textView3);
+        t3.setText(s.getBirthday());
+        CheckBox b=convertView.findViewById(R.id.checkBox);
+        b.setChecked(s.IsSelected());
         b.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -49,6 +50,7 @@ public class MyClassAdapter extends ArrayAdapter<SClass> {
                 notifyDataSetChanged();
             }
         });
+        b.setText("");
         return convertView;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,15 +17,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
-import java.util.ArrayList;
+import com.example.myapplication.Adapter.MyStudentAdapter;
+import com.example.myapplication.R;
+import com.example.myapplication.ViewModel.StudentViewModelFactory;
+import com.example.myapplication.ViewModel.ViewModel_Student;
 
 public class Student_List_Activity extends AppCompatActivity {
     ListView lv;
-    ArrayList<Student> myList;
     MyStudentAdapter myStudentAdapter;
     Button b;
     Intent r;
+    private ViewModel_Student viewModel_student;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,45 +43,28 @@ public class Student_List_Activity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar1);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Danh Sach Sinh Vien");
+
         lv=findViewById(R.id.lv2);
         b=findViewById(R.id.button2);
         r=getIntent();
-        int numlist=r.getIntExtra("NumList",3);
-
-        /*SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("DATA",MODE_PRIVATE);
-
-
-            Gson gson=new Gson();
-            String json=sharedPreferences.getString("student_data",null);
-            Type type=new TypeToken<ArrayList<Student>>(){}.getType();
-            myList=gson.fromJson(json,type);*/
-
-            myList = new ArrayList<>();
-            for (int i = 0; i < numlist; i++)
-            {
-                myList.add((Student) r.getSerializableExtra("model" + i));
-            }
-
-        myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
+        viewModel_student=new ViewModelProvider(Student_List_Activity.this, new StudentViewModelFactory(r)).get(ViewModel_Student.class);
+        myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,viewModel_student.getMyList());
         lv.setAdapter(myStudentAdapter);
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                passing();
+                viewModel_student.passingStudentList(r);
+                setResult(11,r);
                 finish();
             }
         });
     }
-    private void passing(){
-        for (int i=0;i<myList.size();i++){
-            r.putExtra("model"+i,myList.get(i));
-        }
-        r.putExtra("size",myList.size());
-        setResult(11,r);
-    }
+
     @Override
     public void onBackPressed() {
-        passing();
+        viewModel_student.passingStudentList(r);
+        setResult(11,r);
         super.onBackPressed();
     }
 
@@ -88,7 +75,6 @@ public class Student_List_Activity extends AppCompatActivity {
         infalter.inflate(R.menu.menu,menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
@@ -98,29 +84,8 @@ public class Student_List_Activity extends AppCompatActivity {
             startActivityForResult(r,99);
         }
         else{
-            ArrayList<Integer> array=new ArrayList<Integer>();
-            for (int i=0;i<myList.size();i++){
-                if (myList.get(i).IsSelected()){
-                    array.add(i);
-                }
-            }
-            if (array.isEmpty()) return true;
-            int j=0;
-            int numremove=0;
-            int sizeOri=myList.size();
-            for (int i=0;i<sizeOri;i++)
-            {
-                if (i==array.get(j))
-                {
-                    myList.remove(i);
-                    if (j<array.size()-1) j++;
-                    numremove++;
-                    array.set(j, array.get(j)-numremove);
-                    i--;
-                    sizeOri--;
-                }
-            }
-            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
+            viewModel_student.deleteStudent();
+            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,viewModel_student.getMyList());
             lv.setAdapter(myStudentAdapter);
         }
         return super.onOptionsItemSelected(item);
@@ -132,12 +97,29 @@ public class Student_List_Activity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==99 && resultCode==RESULT_OK)
         {
-            String MSSV=data.getStringExtra("MSSV");
-            String name=data.getStringExtra("Name");
-            String birth=data.getStringExtra("Birth");
-            myList.add(new Student(name,MSSV,birth));
-            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
+            viewModel_student.updateList(data);
+            myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,viewModel_student.getMyList());
             lv.setAdapter(myStudentAdapter);
         }
     }
 }
+
+    /*@Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        myList.clear();
+        for (int i=0;i<savedInstanceState.getInt("numlist");i++){
+            myList.add((Student) savedInstanceState.getSerializable("item"+i));
+        }
+        myStudentAdapter=new MyStudentAdapter(Student_List_Activity.this,R.layout.layout_student,myList);
+        lv.setAdapter(myStudentAdapter);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        for (int i=0;i<myList.size();i++){
+            outState.putSerializable("item"+i,myList.get(i));
+        }
+        outState.putInt("numlist",myList.size());
+    }*/
